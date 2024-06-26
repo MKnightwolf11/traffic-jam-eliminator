@@ -1,0 +1,51 @@
+def generate_yolov4_config(num_classes, num_anchors):
+    config = """[net]
+batch=64
+subdivisions=16
+width=416
+height=416
+channels=3
+momentum=0.9
+decay=0.0005
+angle=0
+saturation=1.5
+exposure=1.5
+hue=.1
+
+[convolutional]
+size=1
+stride=1
+pad=1
+filters=32
+activation=leaky
+
+[convolutional]
+size=3
+stride=1
+pad=1
+filters=64
+activation=leaky
+
+# Add more layers as needed
+
+[yolo]
+mask = 0,1,2
+anchors = 12,16, 19,36, 40,28, 36,75, 76,55, 72,146, 142,110, 192,243, 459,401
+classes={}
+num={}
+""".format(num_classes, num_anchors)
+
+    return config
+
+# Example usage
+num_classes = 20  # Replace with the actual number of classes in your dataset
+num_anchors = 9   # Replace with the actual number of anchors for your dataset
+
+config_content = generate_yolov4_config(num_classes, num_anchors)
+
+# Save the configuration to a file
+config_file_path = "yolov4.cfg"
+with open(config_file_path, "w") as config_file:
+    config_file.write(config_content)
+
+print(f"YOLOv4 configuration file saved to {config_file_path}")
